@@ -1,6 +1,6 @@
 [package]
 name = "carpenter930"
-version = "1.0.0"
+version = "1.0.2"
 edition = "2021"
 build = "build.rs"
 
@@ -13,7 +13,7 @@ ffi = []
 
 [dependencies]
 
-[build-dependencies]
+[target.'cfg(windows)'.build-dependencies]
 winres = "0.1"
 
 [package.metadata.winres]
