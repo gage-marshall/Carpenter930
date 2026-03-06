@@ -1,0 +1,24 @@
+[package]
+name = "carpenter930"
+version = "1.0.0"
+edition = "2021"
+build = "build.rs"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+ffi = []
+
+[dependencies]
+
+[build-dependencies]
+winres = "0.1"
+
+[package.metadata.winres]
+CompanyName = "Gage Marshall"
+ProductName = "Carpenter 930 Library"
+FileDescription = "Carpenter 930 Wire Cutter Memory File Generator"
+LegalCopyright = "Copyright © 2026 Gage Marshall"
+OriginalFilename = "carpenter930.dll"
