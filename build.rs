@@ -1,7 +1,17 @@
+use std::env;
+
 fn main() {
-    // Only embed Windows resources when building for Windows with FFI feature
-    #[cfg(all(target_os = "windows", feature = "ffi"))]
-    {
+    // Get the target OS and check if FFI feature is enabled
+    // IMPORTANT: In build.rs, we must use environment variables, not #[cfg] attributes!
+    // - CARGO_CFG_TARGET_OS gives us the TARGET platform (not the host)
+    // - CARGO_FEATURE_FFI is set when --features ffi is used
+    let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap_or_default();
+    let is_ffi_enabled = env::var("CARGO_FEATURE_FFI").is_ok();
+
+    // Only embed Windows resources when:
+    // 1. Building for Windows target (not host!)
+    // 2. FFI feature is enabled
+    if target_os == "windows" && is_ffi_enabled {
         let mut res = winres::WindowsResource::new();
 
         // Set DLL-specific metadata
@@ -17,9 +27,5 @@ fn main() {
         }
     }
 
-    // For non-Windows or non-FFI builds, this script does nothing
-    #[cfg(not(all(target_os = "windows", feature = "ffi")))]
-    {
-        // No-op: Windows resources are only relevant for Windows DLL builds
-    }
+    // For non-Windows targets or non-FFI builds, this script does nothing
 }
