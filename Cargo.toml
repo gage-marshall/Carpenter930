@@ -13,7 +13,7 @@ ffi = []
 
 [dependencies]
 
-[target.'cfg(windows)'.build-dependencies]
+[build-dependencies]
 winres = "0.1"
 
 [package.metadata.winres]
