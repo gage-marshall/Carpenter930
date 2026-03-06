@@ -24,9 +24,9 @@ The library can be used as:
 
 **Download pre-built shared libraries for your platform from [GitHub Releases](../../releases)!**
 
-Supports:
+Supports **6 platforms**:
 - **Windows** (x64): MSVC and GNU toolchains
-- **Linux** (x64/ARM64): glibc and musl
+- **Linux** (x64/ARM64): glibc (works on Ubuntu, Debian, Fedora, RHEL, Arch, Alpine with gcompat)
 - **macOS** (Intel/Apple Silicon): Universal binaries
 
 See [TARGETS.md](TARGETS.md) for complete platform support details.

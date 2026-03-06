@@ -20,14 +20,15 @@ The Carpenter 930 library supports building for multiple platforms and architect
 
 | Target Triple | ABI | Output | Notes |
 |---------------|-----|--------|-------|
-| `x86_64-unknown-linux-gnu` | glibc | `libcarpenter930.so` | **Recommended** - Standard Linux |
-| `x86_64-unknown-linux-musl` | musl | `libcarpenter930.so` | Static linking, no glibc dependency |
-| `aarch64-unknown-linux-gnu` | glibc | `libcarpenter930.so` | ARM64 (Raspberry Pi 4+, AWS Graviton) |
+| `x86_64-unknown-linux-gnu` | glibc | `libcarpenter930.so` | **Recommended** - Standard Linux (Ubuntu, Debian, Fedora, RHEL, Arch, etc.) |
+| `aarch64-unknown-linux-gnu` | glibc | `libcarpenter930.so` | ARM64 (Raspberry Pi 4+, AWS Graviton, ARM servers) |
 
 **Linux Features:**
 - Position-independent code (PIC)
-- musl builds are fully static
 - Compatible with all major distributions
+- Works on Alpine Linux with `gcompat` package
+
+**Note on musl/Alpine:** The x86_64-unknown-linux-gnu build works on Alpine Linux when the `gcompat` package is installed (`apk add gcompat`). Due to fundamental incompatibilities between musl and cdylib (shared libraries), we do not provide musl-specific builds. Alpine users can use the glibc build or compile from source for static linking needs.
 
 ### macOS (Intel and Apple Silicon)
 
@@ -140,7 +141,6 @@ GitHub releases include pre-built binaries for all supported targets:
 - `carpenter930-v1.0.0-x86_64-pc-windows-msvc.zip`
 - `carpenter930-v1.0.0-x86_64-pc-windows-gnu.zip`
 - `carpenter930-v1.0.0-x86_64-unknown-linux-gnu.tar.gz`
-- `carpenter930-v1.0.0-x86_64-unknown-linux-musl.tar.gz`
 - `carpenter930-v1.0.0-aarch64-unknown-linux-gnu.tar.gz`
 - `carpenter930-v1.0.0-x86_64-apple-darwin.tar.gz`
 - `carpenter930-v1.0.0-aarch64-apple-darwin.tar.gz`
@@ -151,10 +151,7 @@ Download the appropriate archive for your platform and extract the shared librar
 
 ### Linux: "version `GLIBC_X.XX' not found"
 
-The `x86_64-unknown-linux-gnu` build requires a recent glibc version. Use the `musl` target for maximum compatibility:
-```bash
-cross build --release --features ffi --target x86_64-unknown-linux-musl
-```
+The `x86_64-unknown-linux-gnu` build requires a recent glibc version (typically glibc 2.17+, which covers systems from ~2012 onwards). If you're on a very old Linux distribution, you may need to compile from source or upgrade your system.
 
 ### macOS: "dylib cannot be opened because the developer cannot be verified"
 
