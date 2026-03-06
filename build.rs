@@ -8,20 +8,24 @@ fn main() {
     // Only embed Windows resources when:
     // 1. Building for Windows target
     // 2. FFI feature is enabled
-    if target_os == "windows" && is_ffi_enabled {
-        let mut res = winres::WindowsResource::new();
+    #[cfg(windows)]
+    {
+        if target_os == "windows" && is_ffi_enabled {
+            let mut res = winres::WindowsResource::new();
 
-        // Set DLL-specific metadata
-        res.set("InternalName", "carpenter930")
-           .set("OriginalFilename", "carpenter930.dll")
-           .set("ProductName", "Carpenter 930 Library");
+            // Set DLL-specific metadata
+            res.set("InternalName", "carpenter930")
+               .set("OriginalFilename", "carpenter930.dll")
+               .set("ProductName", "Carpenter 930 Library");
 
-        // Compile the resource file
-        // This will embed version info from Cargo.toml [package] and [package.metadata.winres]
-        if let Err(e) = res.compile() {
-            eprintln!("Failed to compile Windows resources: {}", e);
-            std::process::exit(1);
+            // Compile the resource file
+            // This will embed version info from Cargo.toml [package] and [package.metadata.winres]
+            if let Err(e) = res.compile() {
+                eprintln!("Failed to compile Windows resources: {}", e);
+                std::process::exit(1);
+            }
         }
     }
 
+    // For non-Windows targets, this build script does nothing
 }
