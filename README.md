@@ -2,6 +2,8 @@
 
 A Rust library for generating `.MEM` memory files for the Carpenter 930 wire cutter.
 
+Disclaimer: This project is an independent reverse-engineering effort and is not affiliated with, endorsed by, or supported by Carpenter Mfg. Co, Inc. All trademarks, product names, and company names or logos are the property of their respective owners. This tool is provided for educational and interoperability purposes under fair use.
+
 **Core library is 100% safe Rust with `#![forbid(unsafe_code)]`**
 
 The library can be used as:
