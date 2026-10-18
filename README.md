@@ -92,7 +92,7 @@ Enable the `ffi` feature in your `Cargo.toml`:
 
 ```toml
 [dependencies]
-carpenter930 = { version = "0.1", features = ["ffi"] }
+carpenter930 = { git = "https://github.com/gage-marshall/Carpenter930", tag = "v1.0.6", features = ["ffi"] }
 ```
 
 Then use from C:
@@ -110,7 +110,8 @@ int main() {
     void* params = carpenter930_params_new();
 
     carpenter930_params_set_name(params, "TEST");
-    // Set other fields via pointer manipulation or additional setter functions
+    // Carpenter930Params is #[repr(C)]: mirror the struct from src/types.rs
+    // to set the remaining fields directly. Only the name has a setter today.
 
     carpenter930_generate_to_file(params, "output.mem");
     carpenter930_params_free(params);
